@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IDÓSIA - Assistente de Saúde</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <header class="main-header">
+            <h1>
+                <span class="material-icons icon-animated">medical_services</span>
+                IDÓSIA - Assistente de Saúde
+            </h1>
+            <p class="subtitle">Seu assistente pessoal para monitoramento de saúde</p>
+        </header>
+
+        <section class="input-section card" style="--animation-delay: 0.2s">
+            <h2>
+                <span class="material-icons icon-animated">edit</span>
+                Inserir Dados de Saúde
+            </h2>
+            <form method="POST" id="healthForm">
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label for="idade">
+                            <span class="material-icons">person</span>
+                            Idade
+                        </label>
+                        <input type="number" id="idade" name="idade" required min="0" max="120">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="pressao_sistolica">
+                            <span class="material-icons">favorite</span>
+                            Pressão Sistólica (mmHg)
+                        </label>
+                        <input type="number" id="pressao_sistolica" name="pressao_sistolica" required min="70" max="200">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="pressao_diastolica">
+                            <span class="material-icons">favorite_border</span>
+                            Pressão Diastólica (mmHg)
+                        </label>
+                        <input type="number" id="pressao_diastolica" name="pressao_diastolica" required min="40" max="120">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="freq_cardiaca">
+                            <span class="material-icons">monitor_heart</span>
+                            Frequência Cardíaca (bpm)
+                        </label>
+                        <input type="number" id="freq_cardiaca" name="freq_cardiaca" required min="40" max="200">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="glicose_jejum">
+                            <span class="material-icons">water_drop</span>
+                            Glicose em Jejum (mg/dL)
+                        </label>
+                        <input type="number" id="glicose_jejum" name="glicose_jejum" required min="50" max="500">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="colesterol_ldl">
+                            <span class="material-icons">trending_down</span>
+                            Colesterol LDL (mg/dL)
+                        </label>
+                        <input type="number" id="colesterol_ldl" name="colesterol_ldl" required min="30" max="300">
+                    </div>
+                </div>
+
+                <button type="submit" class="submit-button">
+                    <span class="material-icons icon-animated">search</span>
+                    Analisar Dados
+                </button>
+            </form>
+        </section>
+
+        {% if mostrar_resultados %}
+        <section class="results-section">
+            <div class="card" style="--animation-delay: 0.4s">
+                <h2>
+                    <span class="material-icons icon-animated">analytics</span>
+                    Análise de Saúde
+                </h2>
+                {% for tipo, info in analises.items() %}
+                <div class="alert {% if info.status == 'alerta' %}alert-warning{% else %}alert-success{% endif %}">
+                    <span class="material-icons">{% if info.status == 'alerta' %}warning{% else %}check_circle{% endif %}</span>
+                    <div class="alert-content">
+                        <div class="alert-message">{{ info.mensagem }}</div>
+                        <div class="alert-risk">{{ info.risco }}</div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+
+            {% if recomendacoes %}
+            <div class="card" style="--animation-delay: 0.6s">
+                <h2>
+                    <span class="material-icons icon-animated">tips_and_updates</span>
+                    Recomendações
+                </h2>
+                <ul class="recommendations-list">
+                    {% for rec in recomendacoes %}
+                    <li style="--item-index: {{ loop.index }}">
+                        <span class="material-icons icon-animated">check_circle</span>
+                        {{ rec }}
+                    </li>
+                    {% endfor %}
+                </ul>
+            </div>
+            {% endif %}
+
+            <div class="card" style="--animation-delay: 0.8s">
+                <h2>
+                    <span class="material-icons icon-animated">dashboard</span>
+                    Dashboard
+                </h2>
+                {{ dashboard | safe }}
+            </div>
+        </section>
+        {% endif %}
+    </div>
+</body>
+</html>
