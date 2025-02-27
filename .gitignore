@@ -1,0 +1,8 @@
+__pycache__/
+*.pyc
+idosia-env/
+.env
+Lib/
+Scripts/
+*.cfg
+pyvenv.cfg
