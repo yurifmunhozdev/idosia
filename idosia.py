@@ -42,7 +42,7 @@ def analisar_dados_saude(dados):
     return resultados
 
 def criar_dashboard(dados):
-    # Otimizar o gráfico para carregamento mais rápido
+    # Criar dados históricos simulados
     historico = [
         {"data": "2024-02-01", "pressao_sistolica": dados['pressao_sistolica'], 
          "pressao_diastolica": dados['pressao_diastolica']},
@@ -57,12 +57,12 @@ def criar_dashboard(dados):
         font_size=16,
         plot_bgcolor='white',
         paper_bgcolor='white',
-        height=400,  # Reduzir altura
-        width=600,   # Reduzir largura
+        height=400,
+        width=600,
         showlegend=True,
-        margin=dict(l=40, r=40, t=40, b=40)  # Reduzir margens
+        margin=dict(l=40, r=40, t=40, b=40)
     )
-    return fig.to_html(include_plotlyjs='cdn')  # Usar CDN para plotly.js
+    return fig.to_html(include_plotlyjs='cdn')
 
 def gerar_recomendacoes(dados):
     recomendacoes = []
