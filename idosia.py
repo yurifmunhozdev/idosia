@@ -12,16 +12,32 @@ def analisar_dados_saude(dados):
     ps = dados.get('pressao_sistolica', 0)
     pd = dados.get('pressao_diastolica', 0)
     if ps > 140 or pd > 90:
-        resultados['pressao'] = f"Atenção! Sua pressão {ps}/{pd} mmHg está acima do ideal (120/80)."
+        resultados['pressao'] = {
+            'mensagem': f"Sua pressão {ps}/{pd} mmHg está acima do ideal (120/80).",
+            'status': 'alerta',
+            'risco': 'Risco aumentado para problemas cardiovasculares'
+        }
     else:
-        resultados['pressao'] = f"Sua pressão {ps}/{pd} mmHg está dentro dos valores normais."
+        resultados['pressao'] = {
+            'mensagem': f"Sua pressão {ps}/{pd} mmHg está dentro dos valores normais.",
+            'status': 'normal',
+            'risco': 'Risco cardiovascular dentro do esperado'
+        }
 
     # Análise de Colesterol
     ldl = dados.get('colesterol_ldl', 0)
     if ldl > 130:
-        resultados['colesterol'] = f"Atenção! Seu colesterol LDL de {ldl} mg/dL está alto. Recomendamos consulta médica."
+        resultados['colesterol'] = {
+            'mensagem': f"Seu colesterol LDL de {ldl} mg/dL está alto.",
+            'status': 'alerta',
+            'risco': 'Risco aumentado para doenças cardiovasculares'
+        }
     else:
-        resultados['colesterol'] = f"Seu colesterol LDL de {ldl} mg/dL está em níveis adequados."
+        resultados['colesterol'] = {
+            'mensagem': f"Seu colesterol LDL de {ldl} mg/dL está em níveis adequados.",
+            'status': 'normal',
+            'risco': 'Risco cardiovascular dentro do esperado'
+        }
 
     return resultados
 
