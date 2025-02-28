@@ -17,4 +17,15 @@ IDÓSIA é uma aplicação web inovadora desenvolvida para auxiliar no monitoram
 - Pandas (Análise de Dados)
 - HTML/CSS (Interface)
 
+## Para visualizar ##
+
+1 - git clone https://github.com/yurifmunhozdev/idosia.git
+2 - cd idosia
+3 - python -m venv venv
+4 - .\venv\Scripts\activate
+5 - pip install -r requirements.txt
+6 - python idosia.py
+
+Link: https://idosia.onrender.com
+
 ## Em desenvolvimento ##
