@@ -9,6 +9,13 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body>
+    <div class="theme-switch">
+        <button onclick="toggleTheme()">
+            <span class="material-icons">dark_mode</span>
+            <span class="theme-text">Modo Escuro</span>
+        </button>
+    </div>
+
     <div class="container">
         <header class="main-header">
             <h1>
@@ -114,48 +121,4 @@
                 </div>
             </div>
 
-            <div class="card">
-                <h2>
-                    <span class="material-icons icon-animated">analytics</span>
-                    Análises Detalhadas
-                </h2>
-                {% for tipo, info in analises.items() %}
-                <div class="alert {% if info.status == 'alerta' %}alert-warning{% else %}alert-success{% endif %}">
-                    <span class="material-icons">{% if info.status == 'alerta' %}warning{% else %}check_circle{% endif %}</span>
-                    <div class="alert-content">
-                        <div class="alert-message">{{ info.mensagem }}</div>
-                        <div class="alert-risk">{{ info.risco }}</div>
-                    </div>
-                </div>
-                {% endfor %}
-            </div>
-
-            {% if recomendacoes %}
-            <div class="card">
-                <h2>
-                    <span class="material-icons icon-animated">tips_and_updates</span>
-                    Recomendações
-                </h2>
-                <ul class="recommendations-list">
-                    {% for rec in recomendacoes %}
-                    <li>
-                        <span class="material-icons icon-animated">check_circle</span>
-                        {{ rec }}
-                    </li>
-                    {% endfor %}
-                </ul>
-            </div>
-            {% endif %}
-
-            <div class="card">
-                <h2>
-                    <span class="material-icons icon-animated">dashboard</span>
-                    Dashboard
-                </h2>
-                {{ dashboard | safe }}
-            </div>
-        </section>
-        {% endif %}
-    </div>
-</body>
-</html>
+            <div class="
