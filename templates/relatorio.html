@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Relatório de Saúde - IDÓSIA</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            margin: 20px;
+        }
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+            color: #2196F3;
+        }
+        .section {
+            margin-bottom: 20px;
+            padding: 15px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+        .alert {
+            padding: 10px;
+            margin: 5px 0;
+            border-radius: 5px;
+        }
+        .alert-warning {
+            background-color: #fff3cd;
+            border: 1px solid #ffeeba;
+            color: #856404;
+        }
+        .alert-success {
+            background-color: #d4edda;
+            border: 1px solid #c3e6cb;
+            color: #155724;
+        }
+        .recommendations {
+            list-style-type: none;
+            padding-left: 0;
+        }
+        .recommendations li {
+            margin-bottom: 10px;
+            padding-left: 20px;
+            position: relative;
+        }
+        .recommendations li:before {
+            content: "•";
+            position: absolute;
+            left: 0;
+        }
+        .footer {
+            margin-top: 30px;
+            text-align: center;
+            font-size: 0.9em;
+            color: #666;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>Relatório de Saúde - IDÓSIA</h1>
+        <p>Data de geração: {{ data_geracao }}</p>
+    </div>
+
+    <div class="section">
+        <h2>Dados do Paciente</h2>
+        <p>Idade: {{ dados.idade }} anos</p>
+        <p>Pressão Arterial: {{ dados.pressao_sistolica }}/{{ dados.pressao_diastolica }} mmHg</p>
+        <p>Glicose em Jejum: {{ dados.glicose_jejum }} mg/dL</p>
+        <p>Frequência Cardíaca: {{ dados.freq_cardiaca }} bpm</p>
+    </div>
+
+    <div class="section">
+        <h2>Análise de Saúde</h2>
+        {% for tipo, info in analises.items() %}
+        <div class="alert {% if info.status == 'alerta' %}alert-warning{% else %}alert-success{% endif %}">
+            <strong>{{ tipo|title }}:</strong> {{ info.mensagem }}
+            {% if info.risco %}
+            <br>
+            <small>Risco: {{ info.risco }}</small>
+            {% endif %}
+        </div>
+        {% endfor %}
+    </div>
+
+    <div class="section">
+        <h2>Recomendações</h2>
+        <ul class="recommendations">
+            {% for rec in recomendacoes %}
+            <li>{{ rec }}</li>
+            {% endfor %}
+        </ul>
+    </div>
+
+    <div class="footer">
+        <p>Este relatório foi gerado automaticamente pelo IDÓSIA.</p>
+        <p>Consulte um profissional de saúde para interpretação adequada dos resultados.</p>
+    </div>
+</body>
+</html>

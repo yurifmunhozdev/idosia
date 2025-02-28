@@ -1,0 +1,24 @@
+<div class="card fade-in">
+    <h2>Análise de Saúde</h2>
+    {% for tipo, mensagem in analises.items() %}
+        <div class="alert {% if 'Atenção' in mensagem %}alert-warning{% else %}alert-success{% endif %}">
+            {{ mensagem }}
+        </div>
+    {% endfor %}
+</div>
+
+<div class="card fade-in">
+    <h2>Recomendações</h2>
+    <ul class="recommendations-list">
+        {% for rec in recomendacoes %}
+            <li>{{ rec }}</li>
+        {% endfor %}
+    </ul>
+</div>
+
+<div class="card fade-in">
+    <h2>Dashboard</h2>
+    <div class="dashboard-container">
+        {{ dashboard | safe }}
+    </div>
+</div>
