@@ -1,1 +1,176 @@
-<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8" /><meta http-equiv="Content-Style-Type" content="text/css" /><meta name="generator" content="Aspose.Words for .NET 17.1.0.0" /><title>IDÓSIA - Assistente de Saúde</title></head><body><div><h1 style="margin:18.1pt 24pt; text-align:center; line-height:43.2pt"><span style="font-family:'Segoe UI'; font-size:27pt; color:#ffffff">IDÓSIA</span></h1><p style="margin:13.5pt 24pt; text-align:center; line-height:21.6pt"><span style="font-family:'Segoe UI'; font-size:13.5pt; color:#ffffff">Seu Assistente Pessoal de Saúde</span></p><p style="margin:18pt 24pt 16.8pt; line-height:32.4pt; padding:24pt; background-color:#ffffff"><span style="font-family:'Segoe UI'; font-size:20.5pt; font-weight:bold">Inserir Dados de Saúde</span></p><p style="margin:0pt 48pt 18pt; line-height:21.6pt; background-color:#ffffff"><span style="font-family:'Segoe UI'; font-size:13.5pt; font-weight:bold">Idade</span></p><p style="margin:0pt 48pt 18pt; line-height:19.2pt; background-color:#ffffff"><input type="text" name="idade" value="" /></p><p style="margin:0pt 48pt 18pt; line-height:21.6pt; background-color:#ffffff"><span style="font-family:'Segoe UI'; font-size:13.5pt; font-weight:bold">Colesterol LDL (mg/dL)</span></p><p style="margin:0pt 48pt 18pt; line-height:19.2pt; background-color:#ffffff"><input type="text" name="colesterol_ldl" value="" /></p><p style="margin:0pt 48pt 18pt; line-height:21.6pt; background-color:#ffffff"><span style="font-family:'Segoe UI'; font-size:13.5pt; font-weight:bold">Pressão Sistólica (mmHg)</span></p><p style="margin:0pt 48pt 18pt; line-height:19.2pt; background-color:#ffffff"><input type="text" name="pressao_sistolica" value="" /></p><p style="margin:0pt 48pt 18pt; line-height:21.6pt; background-color:#ffffff"><span style="font-family:'Segoe UI'; font-size:13.5pt; font-weight:bold">Pressão Diastólica (mmHg)</span></p><p style="margin:0pt 48pt 18pt; line-height:19.2pt; background-color:#ffffff"><input type="text" name="pressao_diastolica" value="" /></p><p style="margin:0pt 48pt 18pt; line-height:21.1pt; background-color:#ffffff"><span style="font-family:'Segoe UI'; font-size:13pt; color:#ffffff">Analisar Dados</span></p><p style="margin:18pt 48pt 16.8pt; line-height:32.4pt; padding-bottom:6pt; background-color:#ffffff"><span style="font-family:'Segoe UI'; font-size:20.5pt; font-weight:bold">Análise de Saúde</span></p><p style="margin:0pt 24pt; line-height:21.6pt; padding:24pt; background-color:#ffffff"><span style="font-family:'Segoe UI'; font-size:13.5pt">{% for tipo, analise in analises.items() %} </span></p><p style="margin:0pt 48pt 12pt; line-height:21.6pt; border:0.75pt solid #ffeeba; padding:12pt; background-color:#fff3cd"><span style="font-family:'Segoe UI'; font-size:13.5pt; color:#856404">{{ analise }} </span></p><p style="margin:0pt 24pt 18pt; line-height:21.6pt; padding:24pt; background-color:#ffffff"><span style="font-family:'Segoe UI'; font-size:13.5pt">{% endfor %} </span></p><p style="margin:18pt 48pt 16.8pt; line-height:32.4pt; padding-bottom:6pt; background-color:#ffffff"><span style="font-family:'Segoe UI'; font-size:20.5pt; font-weight:bold">Recomendações</span></p><p style="margin:13.5pt 48pt 0pt; line-height:21.6pt; background-color:#ffffff"><span style="font-family:'Segoe UI'; font-size:13.5pt">{% for recomendacao in recomendacoes %} </span></p><p style="margin:0pt 48pt; line-height:21.6pt; border-bottom:0.75pt solid #eeeeee; padding-top:6pt; padding-bottom:6pt; background-color:#ffffff"><span style="font-family:'Segoe UI'; font-size:13.5pt">{{ recomendacao }}</span></p><p style="margin:0pt 48pt 18pt; line-height:21.6pt; background-color:#ffffff"><span style="font-family:'Segoe UI'; font-size:13.5pt">{% endfor %} </span></p><p style="margin:18pt 48pt 16.8pt; line-height:32.4pt; padding-bottom:6pt; background-color:#ffffff"><span style="font-family:'Segoe UI'; font-size:20.5pt; font-weight:bold">Dashboard</span></p><p style="margin:0pt 48pt 18pt; line-height:21.6pt; background-color:#ffffff"><span style="font-family:'Segoe UI'; font-size:13.5pt">{% if dashboards.pressao %} {{ dashboards.pressao | safe }} {% endif %} {% if dashboards.glicemia %} {{ dashboards.glicemia | safe }} {% endif %} </span></p></div></body></html>
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IDÓSIA - Assistente de Saúde</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="theme-switch">
+        <button onclick="toggleTheme()">
+            <i class="fas fa-moon"></i>
+            <span class="theme-text">Modo Escuro</span>
+        </button>
+    </div>
+
+    <div class="container">
+        <header class="main-header">
+            <h1>
+                <i class="fas fa-heartbeat fa-icon"></i>
+                IDÓSIA - Assistente de Saúde
+            </h1>
+            <p class="subtitle">Seu assistente pessoal para monitoramento de saúde</p>
+        </header>
+
+        <section class="input-section card">
+            <h2>
+                <i class="fas fa-clipboard-list fa-icon"></i>
+                Inserir Dados de Saúde
+            </h2>
+            <form method="POST" id="healthForm">
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label for="idade">
+                            <i class="fas fa-user fa-icon"></i>
+                            Idade
+                        </label>
+                        <input type="number" id="idade" name="idade" required min="0" max="120">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="pressao_sistolica">
+                            <i class="fas fa-heart fa-icon"></i>
+                            Pressão Sistólica (mmHg)
+                        </label>
+                        <input type="number" id="pressao_sistolica" name="pressao_sistolica" required min="70" max="200">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="pressao_diastolica">
+                            <i class="fas fa-heart-pulse fa-icon"></i>
+                            Pressão Diastólica (mmHg)
+                        </label>
+                        <input type="number" id="pressao_diastolica" name="pressao_diastolica" required min="40" max="120">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="colesterol_ldl">
+                            <i class="fas fa-chart-line fa-icon"></i>
+                            Colesterol LDL (mg/dL)
+                        </label>
+                        <input type="number" id="colesterol_ldl" name="colesterol_ldl" required min="30" max="300">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="glicemia">
+                            <i class="fas fa-tint fa-icon"></i>
+                            Glicemia em Jejum (mg/dL)
+                        </label>
+                        <input type="number" id="glicemia" name="glicemia" required min="50" max="500">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="creatinina">
+                            <i class="fas fa-flask fa-icon"></i>
+                            Creatinina (mg/dL)
+                        </label>
+                        <input type="number" step="0.1" id="creatinina" name="creatinina" required min="0" max="10">
+                    </div>
+                </div>
+
+                <button type="submit" class="submit-button">
+                    <i class="fas fa-stethoscope"></i>
+                    Analisar Dados
+                </button>
+            </form>
+        </section>
+
+        {% if mostrar_resultados %}
+        <section class="results-section">
+            <div class="card summary-card">
+                <h2>
+                    <i class="fas fa-chart-pie fa-icon"></i>
+                    Resumo da Avaliação
+                </h2>
+                <div class="risk-score">
+                    <div class="score-value">{{ escore_risco }}/10</div>
+                    <div class="score-label">Escore de Risco</div>
+                </div>
+            </div>
+
+            <div class="card">
+                <h2>
+                    <i class="fas fa-notes-medical fa-icon"></i>
+                    Análises Detalhadas
+                </h2>
+                {% for tipo, info in analises.items() %}
+                <div class="alert {% if info.status == 'alerta' %}alert-warning{% else %}alert-success{% endif %}">
+                    <i class="fas {% if info.status == 'alerta' %}fa-exclamation-triangle{% else %}fa-check-circle{% endif %}"></i>
+                    <div class="alert-content">
+                        <div class="alert-message">{{ info.mensagem }}</div>
+                        <div class="alert-risk">{{ info.risco }}</div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+
+            {% if recomendacoes %}
+            <div class="card">
+                <h2>
+                    <i class="fas fa-list-check fa-icon"></i>
+                    Recomendações
+                </h2>
+                <ul class="recommendations-list">
+                    {% for rec in recomendacoes %}
+                    <li>
+                        <i class="fas fa-check fa-icon"></i>
+                        {{ rec }}
+                    </li>
+                    {% endfor %}
+                </ul>
+            </div>
+            {% endif %}
+
+            <div class="card">
+                <h2>
+                    <i class="fas fa-chart-line fa-icon"></i>
+                    Dashboard
+                </h2>
+                {{ dashboard | safe }}
+            </div>
+        </section>
+        {% endif %}
+    </div>
+
+    <script>
+    function toggleTheme() {
+        const html = document.documentElement;
+        const themeButton = document.querySelector('.theme-switch button');
+        const themeIcon = themeButton.querySelector('.fas');
+        const themeText = themeButton.querySelector('.theme-text');
+        
+        if (html.getAttribute('data-theme') === 'dark') {
+            html.removeAttribute('data-theme');
+            themeIcon.classList.replace('fa-sun', 'fa-moon');
+            themeText.textContent = 'Modo Escuro';
+        } else {
+            html.setAttribute('data-theme', 'dark');
+            themeIcon.classList.replace('fa-moon', 'fa-sun');
+            themeText.textContent = 'Modo Claro';
+        }
+        
+        localStorage.setItem('theme', html.getAttribute('data-theme') || 'light');
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+        const savedTheme = localStorage.getItem('theme') || 'light';
+        if (savedTheme === 'dark') {
+            document.documentElement.setAttribute('data-theme', 'dark');
+            document.querySelector('.theme-text').textContent = 'Modo Claro';
+            document.querySelector('.theme-switch .fas').classList.replace('fa-moon', 'fa-sun');
+        }
+    });
+    </script>

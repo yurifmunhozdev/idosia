@@ -68,21 +68,6 @@ def analisar_dados_saude(dados):
         'risco': "Função renal comprometida" if creatinina > 1.2 else "Função renal normal"
     }
 
-    # Análise de Depressão
-    depressao = dados.get('depressao', 0)
-    if depressao > 5:
-        resultados['depressao'] = {
-            'mensagem': f"Escala de depressão: {depressao}/15 (risco elevado)",
-            'status': 'alerta',
-            'risco': 'Possível depressão geriátrica'
-        }
-    else:
-        resultados['depressao'] = {
-            'mensagem': f"Escala de depressão: {depressao}/15 (normal)",
-            'status': 'normal',
-            'risco': 'Baixo risco depressivo'
-        }
-
     return resultados
 
 def calcular_escore_risco(analises):
@@ -90,8 +75,7 @@ def calcular_escore_risco(analises):
         'pressao': 2,
         'colesterol': 1.5,
         'glicemia': 1.5,
-        'renal': 1,
-        'depressao': 1.2
+        'renal': 1
     }
     
     escore = 0
@@ -100,29 +84,17 @@ def calcular_escore_risco(analises):
             escore += pesos.get(key, 1)
     return min(escore, 10)
 
-def classificar_fragilidade(dados):
-    criterios = 0
-    if dados['imc'] < 22: criterios += 1
-    if dados['depressao'] > 5: criterios += 1
-    if dados['creatinina'] > 1.2: criterios += 1
-    
-    return {
-        0: "Robusto",
-        1: "Pré-frágil",
-        2: "Frágil"
-    }.get(criterios, "Muito frágil")
-
 def criar_dashboard(dados):
     historico = [
-        {"data": "2024-01-01", "pressao_sistolica": 130, "glicemia": 110, "imc": 25},
+        {"data": "2024-01-01", "pressao_sistolica": 130, "glicemia": 110},
         {"data": "2024-02-01", "pressao_sistolica": dados['pressao_sistolica'], 
-         "glicemia": dados['glicemia'], "imc": dados['imc']}
+         "glicemia": dados['glicemia']}
     ]
     
     df = pd.DataFrame(historico)
     
-    fig = px.line(df, x="data", y=["pressao_sistolica", "glicemia", "imc"], 
-                 title="Monitoramento Geriátrico",
+    fig = px.line(df, x="data", y=["pressao_sistolica", "glicemia"], 
+                 title="Monitoramento de Saúde",
                  labels={"value": "Valores", "variable": "Parâmetro"},
                  line_dash="variable")
     
@@ -130,7 +102,7 @@ def criar_dashboard(dados):
         font_size=14,
         plot_bgcolor='#f8f9fa',
         paper_bgcolor='#ffffff',
-        height=500,
+        height=400,
         margin=dict(l=50, r=50, t=60, b=50),
         legend=dict(orientation="h", yanchor="bottom", y=1.02)
     )
@@ -154,10 +126,12 @@ def gerar_recomendacoes(dados):
             "Monitore sua pressão regularmente"
         ])
 
-    if dados.get('imc', 0) < 22:
-        recomendacoes.append("Avaliação nutricional urgente - risco de desnutrição")
-    elif dados.get('imc', 0) > 27:
-        recomendacoes.append("Programa de controle de peso para idosos")
+    if dados.get('glicemia', 0) > 126:
+        recomendacoes.extend([
+            "Consulte um endocrinologista",
+            "Monitore sua glicemia diariamente",
+            "Controle a ingestão de carboidratos"
+        ])
 
     if dados.get('creatinina', 0) > 1.2:
         recomendacoes.extend([
@@ -165,16 +139,6 @@ def gerar_recomendacoes(dados):
             "Evitar anti-inflamatórios",
             "Consultar nefrologista"
         ])
-
-    if dados.get('depressao', 0) > 5:
-        recomendacoes.extend([
-            "Avaliação psiquiátrica recomendada",
-            "Atividades sociais diárias",
-            "Monitoramento do humor"
-        ])
-
-    if dados.get('glicemia', 0) > 126:
-        recomendacoes.append("Teste de hemoglobina glicada (HbA1c) necessário")
     
     return recomendacoes
 
@@ -187,24 +151,20 @@ def home():
             'pressao_sistolica': int(request.form.get('pressao_sistolica', 0)),
             'pressao_diastolica': int(request.form.get('pressao_diastolica', 0)),
             'glicemia': int(request.form.get('glicemia', 0)),
-            'imc': float(request.form.get('imc', 0)),
-            'creatinina': float(request.form.get('creatinina', 0)),
-            'depressao': int(request.form.get('depressao', 0))
+            'creatinina': float(request.form.get('creatinina', 0))
         }
         
         analises = analisar_dados_saude(dados)
         recomendacoes = gerar_recomendacoes(dados)
         dashboard = criar_dashboard(dados)
         escore_risco = calcular_escore_risco(analises)
-        classificacao = classificar_fragilidade(dados)
         
         return render_template('index.html', 
                              mostrar_resultados=True,
                              analises=analises,
                              recomendacoes=recomendacoes,
                              dashboard=dashboard,
-                             escore_risco=escore_risco,
-                             classificacao=classificacao)
+                             escore_risco=escore_risco)
     
     return render_template('index.html', mostrar_resultados=False)
 
