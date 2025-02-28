@@ -18,7 +18,7 @@
             <p class="subtitle">Seu assistente pessoal para monitoramento de saúde</p>
         </header>
 
-        <section class="input-section card" style="--animation-delay: 0.2s">
+        <section class="input-section card">
             <h2>
                 <span class="material-icons icon-animated">edit</span>
                 Inserir Dados de Saúde
@@ -50,27 +50,43 @@
                     </div>
 
                     <div class="form-group">
-                        <label for="freq_cardiaca">
-                            <span class="material-icons">monitor_heart</span>
-                            Frequência Cardíaca (bpm)
-                        </label>
-                        <input type="number" id="freq_cardiaca" name="freq_cardiaca" required min="40" max="200">
-                    </div>
-
-                    <div class="form-group">
-                        <label for="glicose_jejum">
-                            <span class="material-icons">water_drop</span>
-                            Glicose em Jejum (mg/dL)
-                        </label>
-                        <input type="number" id="glicose_jejum" name="glicose_jejum" required min="50" max="500">
-                    </div>
-
-                    <div class="form-group">
                         <label for="colesterol_ldl">
                             <span class="material-icons">trending_down</span>
                             Colesterol LDL (mg/dL)
                         </label>
                         <input type="number" id="colesterol_ldl" name="colesterol_ldl" required min="30" max="300">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="glicemia">
+                            <span class="material-icons">bloodtype</span>
+                            Glicemia em Jejum (mg/dL)
+                        </label>
+                        <input type="number" id="glicemia" name="glicemia" required min="50" max="500">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="imc">
+                            <span class="material-icons">monitor_weight</span>
+                            Índice de Massa Corporal (IMC)
+                        </label>
+                        <input type="number" step="0.1" id="imc" name="imc" required min="15" max="50">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="creatinina">
+                            <span class="material-icons">science</span>
+                            Creatinina (mg/dL)
+                        </label>
+                        <input type="number" step="0.1" id="creatinina" name="creatinina" required min="0" max="10">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="depressao">
+                            <span class="material-icons">psychology</span>
+                            Escala de Depressão Geriátrica (0-15)
+                        </label>
+                        <input type="number" id="depressao" name="depressao" required min="0" max="15">
                     </div>
                 </div>
 
@@ -83,10 +99,25 @@
 
         {% if mostrar_resultados %}
         <section class="results-section">
-            <div class="card" style="--animation-delay: 0.4s">
+            <div class="card summary-card">
+                <h2>
+                    <span class="material-icons icon-animated">assessment</span>
+                    Resumo da Avaliação
+                </h2>
+                <div class="risk-score">
+                    <div class="score-value">{{ escore_risco }}/10</div>
+                    <div class="score-label">Escore de Risco</div>
+                </div>
+                <div class="fragility-status">
+                    <div class="status-label">Status de Fragilidade:</div>
+                    <div class="status-value">{{ classificacao }}</div>
+                </div>
+            </div>
+
+            <div class="card">
                 <h2>
                     <span class="material-icons icon-animated">analytics</span>
-                    Análise de Saúde
+                    Análises Detalhadas
                 </h2>
                 {% for tipo, info in analises.items() %}
                 <div class="alert {% if info.status == 'alerta' %}alert-warning{% else %}alert-success{% endif %}">
@@ -100,14 +131,14 @@
             </div>
 
             {% if recomendacoes %}
-            <div class="card" style="--animation-delay: 0.6s">
+            <div class="card">
                 <h2>
                     <span class="material-icons icon-animated">tips_and_updates</span>
                     Recomendações
                 </h2>
                 <ul class="recommendations-list">
                     {% for rec in recomendacoes %}
-                    <li style="--item-index: {{ loop.index }}">
+                    <li>
                         <span class="material-icons icon-animated">check_circle</span>
                         {{ rec }}
                     </li>
@@ -116,7 +147,7 @@
             </div>
             {% endif %}
 
-            <div class="card" style="--animation-delay: 0.8s">
+            <div class="card">
                 <h2>
                     <span class="material-icons icon-animated">dashboard</span>
                     Dashboard
