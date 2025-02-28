@@ -121,4 +121,78 @@
                 </div>
             </div>
 
-            <div class="
+            <div class="card">
+                <h2>
+                    <span class="material-icons icon-animated">analytics</span>
+                    Análises Detalhadas
+                </h2>
+                {% for tipo, info in analises.items() %}
+                <div class="alert {% if info.status == 'alerta' %}alert-warning{% else %}alert-success{% endif %}">
+                    <span class="material-icons">{% if info.status == 'alerta' %}warning{% else %}check_circle{% endif %}</span>
+                    <div class="alert-content">
+                        <div class="alert-message">{{ info.mensagem }}</div>
+                        <div class="alert-risk">{{ info.risco }}</div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+
+            {% if recomendacoes %}
+            <div class="card">
+                <h2>
+                    <span class="material-icons icon-animated">tips_and_updates</span>
+                    Recomendações
+                </h2>
+                <ul class="recommendations-list">
+                    {% for rec in recomendacoes %}
+                    <li>
+                        <span class="material-icons icon-animated">check_circle</span>
+                        {{ rec }}
+                    </li>
+                    {% endfor %}
+                </ul>
+            </div>
+            {% endif %}
+
+            <div class="card">
+                <h2>
+                    <span class="material-icons icon-animated">dashboard</span>
+                    Dashboard
+                </h2>
+                {{ dashboard | safe }}
+            </div>
+        </section>
+        {% endif %}
+    </div>
+
+    <script>
+    function toggleTheme() {
+        const html = document.documentElement;
+        const themeButton = document.querySelector('.theme-switch button');
+        const themeIcon = themeButton.querySelector('.material-icons');
+        const themeText = themeButton.querySelector('.theme-text');
+        
+        if (html.getAttribute('data-theme') === 'dark') {
+            html.removeAttribute('data-theme');
+            themeIcon.textContent = 'dark_mode';
+            themeText.textContent = 'Modo Escuro';
+        } else {
+            html.setAttribute('data-theme', 'dark');
+            themeIcon.textContent = 'light_mode';
+            themeText.textContent = 'Modo Claro';
+        }
+        
+        localStorage.setItem('theme', html.getAttribute('data-theme') || 'light');
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+        const savedTheme = localStorage.getItem('theme') || 'light';
+        if (savedTheme === 'dark') {
+            document.documentElement.setAttribute('data-theme', 'dark');
+            document.querySelector('.theme-text').textContent = 'Modo Claro';
+            document.querySelector('.theme-switch .material-icons').textContent = 'light_mode';
+        }
+    });
+    </script>
+</body>
+</html>
