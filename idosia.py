@@ -1,7 +1,8 @@
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, jsonify
 import plotly.express as px
 import pandas as pd
 import os
+from chatbot_logic import get_chatbot_response
 
 app = Flask(__name__)
 
@@ -167,6 +168,20 @@ def home():
                              escore_risco=escore_risco)
     
     return render_template('index.html', mostrar_resultados=False)
+
+@app.route('/chat', methods=['POST'])
+def chat():
+    try:
+        user_message = request.json.get('message')
+        if not user_message:
+            return jsonify({"error": "No message provided"}), 400
+        
+        bot_response = get_chatbot_response(user_message)
+        return jsonify({"response": bot_response})
+    except Exception as e:
+        # Log the exception e for debugging
+        print(f"Error in /chat endpoint: {e}") 
+        return jsonify({"error": "An internal error occurred"}), 500
 
 if __name__ == '__main__':
     port = int(os.environ.get("PORT", 10000))

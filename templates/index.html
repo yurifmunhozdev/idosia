@@ -7,6 +7,169 @@
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <style>
+        /* Chatbot UI Styles */
+        #chatToggleButton {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 60px;
+            height: 60px;
+            font-size: 24px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+        }
+
+        #chatPopup {
+            position: fixed;
+            bottom: 90px;
+            right: 20px;
+            width: 350px;
+            max-height: 500px;
+            background-color: var(--card-bg-color, #fff);
+            border: 1px solid var(--border-color, #ddd);
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            display: none; /* Initially hidden */
+            flex-direction: column;
+            z-index: 999;
+            color: var(--text-color, #333);
+        }
+        
+        body[data-theme="dark"] #chatPopup {
+            background-color: #333;
+            border-color: #555;
+            color: #f1f1f1;
+        }
+
+
+        #chatHeader {
+            background-color: var(--primary-color, #007bff);
+            color: white;
+            padding: 10px 15px;
+            border-top-left-radius: 10px;
+            border-top-right-radius: 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        body[data-theme="dark"] #chatHeader {
+            background-color: #444;
+        }
+
+        #chatHeader h3 {
+            margin: 0;
+            font-size: 1.1em;
+        }
+
+        #closeChatButton {
+            background: none;
+            border: none;
+            color: white;
+            font-size: 20px;
+            cursor: pointer;
+        }
+
+        #chatMessages {
+            flex-grow: 1;
+            padding: 15px;
+            overflow-y: auto;
+            min-height: 200px;
+            max-height: 350px; /* Adjust as needed */
+            border-bottom: 1px solid var(--border-color, #ddd);
+        }
+        
+        body[data-theme="dark"] #chatMessages {
+             border-bottom: 1px solid #555;
+        }
+
+        .chat-message {
+            margin-bottom: 10px;
+            padding: 8px 12px;
+            border-radius: 18px;
+            max-width: 85%;
+            word-wrap: break-word;
+        }
+
+        .user-message {
+            background-color: var(--primary-color-light, #d1e7ff);
+            color: var(--primary-color-dark, #004085);
+            margin-left: auto;
+            border-bottom-right-radius: 5px;
+        }
+        
+        body[data-theme="dark"] .user-message {
+            background-color: #555;
+            color: #f1f1f1;
+        }
+
+        .bot-message {
+            background-color: var(--secondary-color-light, #e2e3e5);
+            color: var(--secondary-color-dark, #383d41);
+            margin-right: auto;
+            border-bottom-left-radius: 5px;
+        }
+
+        body[data-theme="dark"] .bot-message {
+            background-color: #484848;
+            color: #f1f1f1;
+        }
+
+
+        #chatInputArea {
+            display: flex;
+            padding: 10px;
+            border-top: 1px solid var(--border-color, #ddd);
+        }
+        body[data-theme="dark"] #chatInputArea {
+            border-top: 1px solid #555;
+        }
+
+        #chatInput {
+            flex-grow: 1;
+            padding: 10px;
+            border: 1px solid var(--border-color, #ccc);
+            border-radius: 20px;
+            margin-right: 10px;
+            background-color: var(--input-bg-color, #fff);
+            color: var(--text-color, #333);
+        }
+        body[data-theme="dark"] #chatInput {
+            background-color: #555;
+            border-color: #666;
+            color: #f1f1f1;
+        }
+
+
+        #chatSendButton {
+            background-color: var(--primary-color, #007bff);
+            color: white;
+            border: none;
+            border-radius: 20px;
+            padding: 10px 15px;
+            cursor: pointer;
+            font-weight: 500;
+        }
+        body[data-theme="dark"] #chatSendButton {
+            background-color: #0056b3; /* Darker blue for dark mode */
+        }
+
+        #chatSendButton:hover {
+            background-color: var(--primary-color-dark, #0056b3);
+        }
+         body[data-theme="dark"] #chatSendButton:hover {
+            background-color: #004085; 
+        }
+    </style>
 </head>
 <body>
     <div class="theme-switch">
@@ -165,6 +328,29 @@
         {% endif %}
     </div>
 
+    <!-- Chatbot Toggle Button -->
+    <button id="chatToggleButton">
+        <span class="material-icons">chat</span>
+    </button>
+
+    <!-- Chatbot Popup Window -->
+    <div id="chatPopup">
+        <div id="chatHeader">
+            <h3>Idosia Assistant</h3>
+            <button id="closeChatButton">&times;</button>
+        </div>
+        <div id="chatMessages">
+            <!-- Initial bot message -->
+            <div class="chat-message bot-message">Olá! Como posso te ajudar hoje?</div>
+        </div>
+        <div id="chatInputArea">
+            <input type="text" id="chatInput" placeholder="Digite sua mensagem...">
+            <button id="chatSendButton">
+                <span class="material-icons">send</span>
+            </button>
+        </div>
+    </div>
+
     <script>
     function toggleTheme() {
         const html = document.documentElement;
@@ -191,6 +377,86 @@
             document.documentElement.setAttribute('data-theme', 'dark');
             document.querySelector('.theme-text').textContent = 'Modo Claro';
             document.querySelector('.theme-switch .material-icons').textContent = 'light_mode';
+        }
+    });
+
+    // Chatbot UI Logic
+    const chatToggleButton = document.getElementById('chatToggleButton');
+    const chatPopup = document.getElementById('chatPopup');
+    const closeChatButton = document.getElementById('closeChatButton');
+    const chatMessages = document.getElementById('chatMessages');
+    const chatInput = document.getElementById('chatInput');
+    const chatSendButton = document.getElementById('chatSendButton');
+
+    chatToggleButton.addEventListener('click', () => {
+        chatPopup.style.display = chatPopup.style.display === 'none' || chatPopup.style.display === '' ? 'flex' : 'none';
+        if (chatPopup.style.display === 'flex') {
+            chatInput.focus();
+             // Scroll to bottom when opening
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+        }
+    });
+
+    closeChatButton.addEventListener('click', () => {
+        chatPopup.style.display = 'none';
+    });
+
+    function appendMessage(text, sender) {
+        const messageDiv = document.createElement('div');
+        messageDiv.classList.add('chat-message', sender === 'user' ? 'user-message' : 'bot-message');
+        messageDiv.textContent = text;
+        chatMessages.appendChild(messageDiv);
+        chatMessages.scrollTop = chatMessages.scrollHeight; // Auto-scroll to bottom
+    }
+
+    async function sendMessage() {
+        const userMessage = chatInput.value.trim();
+        if (userMessage === '') return;
+
+        appendMessage(userMessage, 'user');
+        chatInput.value = '';
+        
+        // Display a thinking indicator for the bot (optional)
+        appendMessage("Pensando...", 'bot-thinking'); // Use a different class if you want specific styling
+        const thinkingMessage = chatMessages.lastElementChild;
+
+
+        try {
+            const response = await fetch('/chat', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ message: userMessage }),
+            });
+
+            if (thinkingMessage && thinkingMessage.classList.contains('bot-thinking')) {
+                chatMessages.removeChild(thinkingMessage);
+            }
+
+            if (!response.ok) {
+                const errorData = await response.json().catch(() => null); // Try to parse error, but don't fail if not JSON
+                const errorMessage = errorData && errorData.error ? errorData.error : `Error: ${response.status}`;
+                appendMessage(`Desculpe, não consegui obter uma resposta. ${errorMessage}`, 'bot');
+                return;
+            }
+
+            const data = await response.json();
+            appendMessage(data.response, 'bot');
+
+        } catch (error) {
+             if (thinkingMessage && thinkingMessage.classList.contains('bot-thinking')) {
+                chatMessages.removeChild(thinkingMessage);
+            }
+            console.error('Chat Error:', error);
+            appendMessage('Desculpe, ocorreu um erro de conexão. Tente novamente.', 'bot');
+        }
+    }
+
+    chatSendButton.addEventListener('click', sendMessage);
+    chatInput.addEventListener('keypress', (event) => {
+        if (event.key === 'Enter') {
+            sendMessage();
         }
     });
     </script>
