@@ -2,6 +2,12 @@ from flask import Flask, render_template, request, jsonify
 import plotly.express as px
 import pandas as pd
 import os
+
+# NEW: Load .env file for environment variables
+from dotenv import load_dotenv
+load_dotenv() # This should be called early
+
+# Import project-specific modules AFTER load_dotenv potentially sets up environment
 from chatbot_logic import get_chatbot_response
 
 app = Flask(__name__)
