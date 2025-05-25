@@ -1,21 +1,84 @@
+/* New Blue and White Color Palette */
 :root {
-    --primary-color: #4C6FFF;
-    --secondary-color: #40C4FF;
-    --text-color: #2D3748;
-    --bg-color: #FFFFFF;
-    --card-bg: #FFFFFF;
-    --card-shadow: 0 4px 20px rgba(76, 111, 255, 0.1);
-    --gradient-primary: linear-gradient(135deg, #4C6FFF 0%, #40C4FF 100%);
-    --gradient-secondary: linear-gradient(135deg, #40C4FF 0%, #4C6FFF 100%);
+    /* Primary Blues */
+    --primary-blue-dark: #0D47A1;    /* Deep Blue for headers, strong accents */
+    --primary-blue-main: #1976D2;    /* Main Blue for buttons, interactive elements */
+    --primary-blue-light: #64B5F6;   /* Light Blue for highlights, secondary elements */
+    --primary-blue-very-light: #E3F2FD; /* Very Light Blue for backgrounds, subtle accents */
+
+    /* Text Colors */
+    --text-color-primary: #212121;      /* Dark Gray for general text on light backgrounds */
+    --text-color-secondary: #5f6368;  /* Medium Gray for less important text */
+    --text-color-on-dark-bg: #FFFFFF;   /* White for text on dark blue backgrounds */
+    --text-color-on-light-bg: #212121; /* For consistency, same as primary text color */
+    --text-color-link: var(--primary-blue-main);
+    --text-color-link-hover: var(--primary-blue-dark);
+
+    /* Background Colors */
+    --background-body: #F4F6F8;        /* Light Grayish Blue - very subtle */
+    --background-card: #FFFFFF;
+    --background-input: #FFFFFF;
+    --background-button-primary: var(--primary-blue-main);
+    --background-button-primary-hover: var(--primary-blue-dark);
+    
+    /* Border Colors */
+    --border-color-main: #BDBDBD;       /* Medium Gray for main borders */
+    --border-color-subtle: #E0E0E0;     /* Light Gray for subtle borders */
+    --border-color-input-focus: var(--primary-blue-main);
+
+    /* Semantic Colors (can be adjusted or kept) */
+    --success-color: #2E7D32;
+    --success-bg: #E8F5E9;
+    --warning-color: #FF8F00;
+    --warning-bg: #FFF3E0;
+    --danger-color: #C62828;
+    --danger-bg: #FFEBEE;
+
+    /* Shadows - More Subtle */
+    --card-shadow: 0 1px 3px rgba(0, 0, 0, 0.05); /* Subtler shadow */
+    --card-shadow-hover: 0 2px 6px rgba(0, 0, 0, 0.07); /* Slightly more on hover */
+    --button-shadow: 0 1px 2px rgba(0, 0, 0, 0.05); /* Subtle button shadow */
 }
 
 [data-theme="dark"] {
-    --primary-color: #40C4FF;
-    --secondary-color: #4C6FFF;
-    --text-color: #E2E8F0;
-    --bg-color: #1A202C;
-    --card-bg: #2D3748;
-    --card-shadow: 0 4px 20px rgba(64, 196, 255, 0.1);
+    /* Primary Blues - Dark Mode (can be same or adjusted) */
+    --primary-blue-dark: #0D47A1;    
+    --primary-blue-main: #1E88E5;    /* Slightly brighter blue for dark mode buttons */
+    --primary-blue-light: #90CAF9;   /* Brighter light blue for dark mode accents */
+    --primary-blue-very-light: #1A293D; /* Dark blue-gray for subtle backgrounds in dark mode */
+
+    /* Text Colors - Dark Mode */
+    --text-color-primary: #E0E0E0;      /* Light Gray for general text */
+    --text-color-secondary: #B0BEC5;  /* Lighter Medium Gray */
+    --text-color-on-dark-bg: #FFFFFF;   /* White (already good for dark backgrounds) */
+    --text-color-on-light-bg: #000000; /* Black text for light blue buttons in dark mode for contrast */
+    --text-color-link: var(--primary-blue-light);
+    --text-color-link-hover: #BBDEFB; /* Even lighter blue for hover */
+
+    /* Background Colors - Dark Mode */
+    --background-body: #0A1929;        /* Very Dark Blue */
+    --background-card: #0F2133;        /* Dark Blue */
+    --background-input: #1A293D;
+    --background-button-primary: var(--primary-blue-main);
+    --background-button-primary-hover: var(--primary-blue-light); /* Light blue hover for dark mode */
+
+    /* Border Colors - Dark Mode */
+    --border-color-main: #424242;       /* Darker Gray */
+    --border-color-subtle: #212121;     /* Very Dark Gray */
+    --border-color-input-focus: var(--primary-blue-light);
+
+    /* Semantic Colors - Dark Mode (can be adjusted) */
+    --success-color: #66BB6A;
+    --success-bg: #132B13; /* Darker green background */
+    --warning-color: #FFA726;
+    --warning-bg: #2F1E0A; /* Darker orange background */
+    --danger-color: #EF5350;
+    --danger-bg: #3E2723;
+    
+    /* Shadows - Dark Mode - Subtler */
+    --card-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+    --card-shadow-hover: 0 2px 6px rgba(0, 0, 0, 0.4);
+    --button-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
 }
 
 @keyframes fadeIn {
@@ -24,54 +87,60 @@
 }
 
 body {
-    font-family: 'Poppins', sans-serif;
-    background-color: var(--bg-color);
-    color: var(--text-color);
+    font-family: 'Open Sans', sans-serif;
+    font-weight: 400; /* Base weight */
+    background-color: var(--background-body);
+    color: var(--text-color-primary);
     margin: 0;
-    padding: 40px;
-    transition: all 0.3s ease;
+    padding: 30px; /* Slightly reduced overall padding */
+    transition: background-color 0.3s ease, color 0.3s ease; /* More specific transitions */
+    line-height: 1.6; /* Improved line height for readability */
 }
 
 .container {
-    max-width: 1200px;
+    max-width: 1100px; /* Slightly reduced max-width for a more compact feel */
     margin: 0 auto;
+    padding: 0 20px; /* Add some horizontal padding for smaller screens */
     position: relative;
 }
 
 .main-header {
     text-align: center;
-    margin-bottom: 50px;
+    margin-bottom: 40px; /* Reduced margin */
     animation: fadeIn 1s ease-out;
 }
 
 .main-header h1 {
-    color: var(--primary-color);
-    font-size: 2.5rem;
-    font-weight: 700;
-    margin-bottom: 10px;
+    color: var(--primary-blue-dark);
+    font-family: 'Open Sans', sans-serif; 
+    font-size: 2.2rem; /* Slightly reduced size */
+    font-weight: 700; 
+    margin-bottom: 8px; /* Reduced margin */
 }
 
 .subtitle {
-    color: var(--secondary-color);
-    font-size: 1.2rem;
-    font-weight: 500;
+    color: var(--text-color-secondary);
+    font-family: 'Open Sans', sans-serif; 
+    font-size: 1.1rem; /* Slightly reduced size */
+    font-weight: 400; 
 }
 
 .card {
-    background: var(--card-bg);
-    border-radius: 20px;
-    padding: 30px;
-    margin-bottom: 30px;
+    background: var(--background-card);
+    border-radius: 10px; /* Consistent, slightly smaller radius */
+    padding: 25px; /* Reduced padding */
+    margin-bottom: 25px; /* Reduced margin */
     box-shadow: var(--card-shadow);
+    border: 1px solid var(--border-color-subtle); 
     position: relative;
     overflow: hidden;
     animation: fadeIn 0.5s ease-out;
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    transition: transform 0.2s ease, box-shadow 0.2s ease; /* Faster transition */
 }
 
 .card:hover {
     transform: translateY(-5px);
-    box-shadow: 0 8px 30px rgba(76, 111, 255, 0.2);
+    box-shadow: var(--card-shadow-hover);
 }
 
 .form-grid {
@@ -88,47 +157,62 @@ body {
 .form-group label {
     display: flex;
     align-items: center;
-    gap: 10px;
-    color: var(--primary-color);
-    font-weight: 500;
-    margin-bottom: 8px;
+    gap: 8px; /* Slightly reduced gap */
+    color: var(--primary-blue-dark); 
+    font-weight: 600; /* Slightly bolder labels */
+    margin-bottom: 6px; /* Reduced margin */
+    font-family: 'Open Sans', sans-serif;
+    font-size: 0.9rem; /* Slightly smaller label text */
 }
+.form-group label .material-icons {
+    font-size: 1.1rem; /* Smaller icons for labels */
+}
+
 
 .form-group input {
     width: 100%;
-    padding: 12px 15px;
-    border: 2px solid #E2E8F0;
-    border-radius: 10px;
-    font-size: 1rem;
-    transition: all 0.3s ease;
+    padding: 10px 12px; /* Reduced padding */
+    border: 1px solid var(--border-color-main); 
+    background-color: var(--background-input);
+    color: var(--text-color-primary);
+    border-radius: 6px; /* Smaller radius for inputs */
+    font-family: 'Open Sans', sans-serif; 
+    font-size: 0.95rem; /* Slightly smaller input text */
+    font-weight: 400; 
+    transition: border-color 0.2s ease, box-shadow 0.2s ease; /* Faster transitions */
 }
 
 .form-group input:focus {
-    border-color: var(--primary-color);
-    box-shadow: 0 0 0 3px rgba(76, 111, 255, 0.1);
+    border-color: var(--border-color-input-focus);
+    box-shadow: 0 0 0 2px color-mix(in srgb, var(--primary-blue-main) 15%, transparent); /* Even subtler focus */
     outline: none;
 }
 
 .submit-button {
-    background: var(--gradient-primary);
-    color: white;
+    background-color: var(--background-button-primary);
+    color: var(--text-color-on-dark-bg);
     border: none;
-    padding: 15px 30px;
-    border-radius: 30px;
-    font-size: 1.1rem;
-    font-weight: 500;
+    padding: 10px 20px; /* Slightly reduced padding */
+    border-radius: 6px; /* Consistent smaller radius */
+    font-family: 'Open Sans', sans-serif; 
+    font-size: 0.95rem; 
+    font-weight: 600; /* Bolder button text */
     cursor: pointer;
     display: flex;
     align-items: center;
     gap: 10px;
-    margin: 30px auto;
-    transition: all 0.3s ease;
+    margin: 25px auto; /* Reduced margin */
+    transition: background-color 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
+    box-shadow: var(--button-shadow);
+}
+.submit-button .material-icons {
+    font-size: 1.2rem; /* Ensure icon size is appropriate */
 }
 
 .submit-button:hover {
-    background: var(--gradient-secondary);
-    transform: translateY(-2px);
-    box-shadow: 0 5px 15px rgba(76, 111, 255, 0.3);
+    background-color: var(--background-button-primary-hover);
+    transform: translateY(-1px); /* More subtle hover transform */
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1); /* Subtler hover shadow */
 }
 
 .theme-switch {
@@ -139,22 +223,37 @@ body {
 }
 
 .theme-switch button {
-    background: var(--gradient-primary);
-    color: white;
+    background-color: var(--primary-blue-main);
+    color: var(--text-color-on-dark-bg);
     border: none;
-    padding: 12px 24px;
-    border-radius: 30px;
+    padding: 8px 16px; /* Reduced padding */
+    border-radius: 6px; /* Consistent smaller radius */
     cursor: pointer;
     display: flex;
     align-items: center;
-    gap: 8px;
-    font-weight: 500;
-    transition: all 0.3s ease;
+    gap: 6px; /* Reduced gap */
+    font-family: 'Open Sans', sans-serif; 
+    font-weight: 500; 
+    transition: background-color 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
+    box-shadow: var(--button-shadow);
+}
+.theme-switch button .material-icons {
+    font-size: 1.2rem;
+}
+.theme-switch button .theme-text {
+    font-size: 0.85rem;
 }
 
+
 .theme-switch button:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 5px 15px rgba(76, 111, 255, 0.3);
+    background-color: var(--primary-blue-dark);
+    transform: translateY(-1px); /* More subtle hover transform */
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1); /* Subtler hover shadow */
+}
+/* Dark mode hover for theme switch button */
+[data-theme="dark"] .theme-switch button:hover {
+    background-color: var(--primary-blue-light);
+    color: var(--text-color-on-light-bg);
 }
 
 .results-section {
@@ -164,36 +263,79 @@ body {
 }
 
 .summary-card {
-    background: var(--gradient-primary);
-    color: white;
+    background-color: var(--primary-blue-dark); 
+    color: var(--text-color-on-dark-bg); 
+    border: none; 
+    border-radius: 10px; /* Match other cards */
 }
+.summary-card h2 {
+    font-weight: 600;
+    font-size: 1.3rem;
+}
+
 
 .risk-score {
     text-align: center;
-    font-size: 3rem;
+    font-size: 2.5rem; /* Slightly reduced */
     font-weight: 700;
-    margin: 20px 0;
+    margin: 15px 0; /* Reduced margin */
+    color: var(--text-color-on-dark-bg); 
 }
+.score-label, .status-label {
+    font-size: 0.9rem;
+    opacity: 0.8;
+}
+.status-value {
+    font-weight: 600;
+    font-size: 1.1rem;
+}
+
 
 .alert {
     display: flex;
-    align-items: flex-start;
-    gap: 15px;
-    padding: 20px;
-    border-radius: 15px;
-    margin-bottom: 15px;
+    align-items: center; /* Center items vertically */
+    gap: 12px; /* Reduced gap */
+    padding: 12px; /* Reduced padding */
+    border-radius: 6px; /* Consistent smaller radius */
+    margin-bottom: 20px; /* Consistent margin */
     animation: fadeIn 0.5s ease-out;
+    border-left-width: 3px; /* Thinner border */
+    border-left-style: solid;
+    background-color: var(--background-card); /* Use card background for minimalism */
+}
+.alert .material-icons {
+    font-size: 1.5rem; /* Consistent icon size */
 }
 
 .alert-warning {
-    background-color: rgba(255, 152, 0, 0.1);
-    border-left: 4px solid #FF9800;
+    border-left-color: var(--warning-color);
+    /* background-color: var(--warning-bg); Remove distinct background for minimalism */
+    color: var(--text-color-primary); 
+}
+.alert-warning .material-icons {
+    color: var(--warning-color);
 }
 
+
 .alert-success {
-    background-color: rgba(76, 175, 80, 0.1);
-    border-left: 4px solid #4CAF50;
+    border-left-color: var(--success-color);
+    /* background-color: var(--success-bg); Remove distinct background for minimalism */
+    color: var(--text-color-primary); 
 }
+.alert-success .material-icons {
+    color: var(--success-color);
+}
+.alert-content {
+    font-size: 0.9rem;
+}
+.alert-message {
+    font-weight: 500;
+}
+.alert-risk {
+    font-size: 0.85rem;
+    opacity: 0.8;
+}
+
 
 .recommendations-list {
     list-style: none;
@@ -203,27 +345,49 @@ body {
 .recommendations-list li {
     display: flex;
     align-items: center;
-    gap: 10px;
-    padding: 15px 0;
-    border-bottom: 1px solid rgba(76, 111, 255, 0.1);
+    gap: 8px; /* Reduced gap */
+    padding: 10px 0; /* Reduced padding */
+    border-bottom: 1px solid var(--border-color-subtle); 
     animation: fadeIn 0.5s ease-out;
+    color: var(--text-color-primary);
+    font-size: 0.9rem; /* Consistent text size */
+}
+.recommendations-list li .material-icons {
+    color: var(--primary-blue-main); 
+    font-size: 1.2rem; /* Consistent icon size */
 }
 
 .recommendations-list li:last-child {
     border-bottom: none;
 }
 
-.fa-icon {
-    font-size: 1.2rem;
-    margin-right: 8px;
-    background: var(--gradient-primary);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
+/* General Icon Styling */
+.material-icons {
+    vertical-align: middle; /* Better alignment with text */
 }
+/* Remove .fa-icon specific gradient styling if not used or adapt */
+/* For Material Icons, color is usually inherited or can be set directly */
+.material-icons.icon-animated {
+    /* color: var(--primary-blue-main); */ /* Example, if needed */
+}
+/* Card Title Styling */
+.card h2 {
+    font-size: 1.4rem; /* Consistent card title size */
+    font-weight: 600; /* Bolder card titles */
+    color: var(--primary-blue-dark);
+    margin-bottom: 20px; /* Space below title */
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+.card h2 .material-icons {
+    font-size: 1.6rem; /* Slightly larger icons for card titles */
+}
+
 
 @media (max-width: 768px) {
     body {
-        padding: 20px;
+        padding: 20px; /* Keep slightly more padding on mobile */
     }
     
     .form-grid {
@@ -231,6 +395,207 @@ body {
     }
     
     .main-header h1 {
-        font-size: 2rem;
+        font-size: 1.8rem; /* Adjust for mobile */
     }
+    .subtitle {
+        font-size: 1rem; /* Adjust for mobile */
+    }
+    .card h2 {
+        font-size: 1.2rem;
+    }
+    .card h2 .material-icons {
+        font-size: 1.4rem;
+    }
+    .submit-button .material-icons {
+        font-size: 1rem;
+    }
+}
+
+/* Chatbot UI Styles - Moved from inline and Refined */
+#chatToggleButton {
+    position: fixed;
+    bottom: 25px; /* Adjusted spacing */
+    right: 25px;  /* Adjusted spacing */
+    background-color: var(--primary-blue-main); 
+    color: var(--text-color-on-dark-bg);
+    border: none;
+    border-radius: 50%; /* Keep circular */
+    width: 56px; /* Slightly smaller */
+    height: 56px; /* Slightly smaller */
+    font-size: 22px; /* Adjusted icon size */
+    box-shadow: var(--button-shadow); /* Consistent shadow */
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+    transition: background-color 0.2s ease, transform 0.2s ease;
+}
+#chatToggleButton:hover {
+    background-color: var(--primary-blue-dark);
+    transform: scale(1.05);
+}
+[data-theme="dark"] #chatToggleButton:hover {
+    background-color: var(--primary-blue-light);
+    color: var(--text-color-on-light-bg);
+}
+
+
+#chatPopup {
+    position: fixed;
+    bottom: 95px; /* Adjusted spacing from toggle button */
+    right: 25px;  /* Adjusted spacing */
+    width: 340px; /* Slightly adjusted width */
+    max-height: 480px; /* Slightly adjusted height */
+    background-color: var(--background-card); 
+    border: 1px solid var(--border-color-subtle); 
+    border-radius: 10px; /* Consistent with cards */
+    box-shadow: var(--card-shadow); /* Consistent with cards */
+    display: none; 
+    flex-direction: column;
+    z-index: 999;
+    color: var(--text-color-primary);
+    font-family: 'Open Sans', sans-serif; /* Ensure font is applied */
+}
+
+/* Dark mode for chatPopup is implicitly handled by variables like --background-card, etc. */
+
+#chatHeader {
+    background-color: var(--primary-blue-dark); 
+    color: var(--text-color-on-dark-bg);
+    padding: 10px 15px;
+    border-top-left-radius: 9px; /* Adjusted for 10px parent - 1px border */
+    border-top-right-radius: 9px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+/* Remove specific dark mode override for chatHeader as variables should handle it */
+/* body[data-theme="dark"] #chatHeader { background-color: var(--primary-blue-dark); } */
+
+
+#chatHeader h3 {
+    margin: 0;
+    font-size: 1rem; /* Consistent with other smaller titles/labels */
+    font-weight: 600; /* Bolder */
+}
+
+#closeChatButton {
+    background: none;
+    border: none;
+    color: var(--text-color-on-dark-bg); 
+    font-size: 22px; /* Slightly larger for easier click */
+    cursor: pointer;
+    padding: 5px; /* Add some padding for easier click */
+    line-height: 1;
+}
+#closeChatButton:hover {
+    opacity: 0.8;
+}
+
+
+#chatMessages {
+    flex-grow: 1;
+    padding: 12px; /* Consistent padding */
+    overflow-y: auto;
+    min-height: 180px; /* Adjusted */
+    max-height: 320px; /* Adjusted */
+    border-bottom: 1px solid var(--border-color-subtle);
+    font-size: 0.9rem; /* Base size for messages */
+}
+[data-theme="dark"] #chatMessages {
+     border-bottom: 1px solid var(--border-color-main);
+}
+
+
+.chat-message {
+    margin-bottom: 8px; /* Reduced margin */
+    padding: 8px 12px;
+    border-radius: 15px; /* Softer, more rounded messages */
+    max-width: 85%;
+    word-wrap: break-word;
+    line-height: 1.4; /* Improved readability for messages */
+}
+
+.user-message {
+    background-color: var(--primary-blue-main); 
+    color: var(--text-color-on-dark-bg);
+    margin-left: auto;
+    border-bottom-right-radius: 4px; /* Slightly tweaked radius */
+}
+[data-theme="dark"] .user-message {
+    background-color: var(--primary-blue-main); /* Keep consistent with light mode, or use dark mode var */
+    color: var(--text-color-on-dark-bg);
+}
+
+
+.bot-message {
+    background-color: var(--primary-blue-very-light); 
+    color: var(--text-color-on-light-bg); /* Ensure this has good contrast */
+    margin-right: auto;
+    border-bottom-left-radius: 4px; /* Slightly tweaked radius */
+    border: 1px solid color-mix(in srgb, var(--primary-blue-light) 30%, transparent); /* Very subtle border */
+}
+[data-theme="dark"] .bot-message {
+    background-color: var(--primary-blue-very-light); 
+    color: var(--text-color-primary); 
+    border: 1px solid color-mix(in srgb, var(--primary-blue-light) 20%, #00000080); /* Adjusted dark border */
+}
+
+#chatInputArea {
+    display: flex;
+    padding: 10px; /* Consistent padding */
+    border-top: 1px solid var(--border-color-subtle);
+    align-items: center; /* Align items vertically */
+}
+[data-theme="dark"] #chatInputArea {
+    border-top: 1px solid var(--border-color-main);
+}
+
+#chatInput {
+    flex-grow: 1;
+    padding: 8px 12px; /* Match form input padding */
+    border: 1px solid var(--border-color-main);
+    border-radius: 6px; /* Match form input radius */
+    margin-right: 8px; /* Reduced margin */
+    background-color: var(--background-input);
+    color: var(--text-color-primary);
+    font-family: 'Open Sans', sans-serif;
+    font-size: 0.9rem; /* Match form input size */
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+#chatInput:focus {
+    border-color: var(--border-color-input-focus);
+    box-shadow: 0 0 0 2px color-mix(in srgb, var(--primary-blue-main) 15%, transparent); /* Match form input focus */
+    outline: none;
+}
+
+
+#chatSendButton {
+    background-color: var(--primary-blue-main);
+    color: var(--text-color-on-dark-bg);
+    border: none;
+    border-radius: 6px; /* Match other buttons */
+    padding: 8px 12px; /* Match other buttons' padding */
+    cursor: pointer;
+    font-weight: 500; /* Match other buttons */
+    font-family: 'Open Sans', sans-serif;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background-color 0.2s ease;
+}
+#chatSendButton .material-icons {
+    font-size: 1.2rem; /* Ensure icon size is appropriate */
+}
+
+#chatSendButton:hover {
+    background-color: var(--primary-blue-dark);
+}
+[data-theme="dark"] #chatSendButton {
+    background-color: var(--primary-blue-main); /* Ensure it uses dark mode var if different */
+}
+[data-theme="dark"] #chatSendButton:hover {
+    background-color: var(--primary-blue-light); 
+    color: var(--text-color-on-light-bg); 
 }
